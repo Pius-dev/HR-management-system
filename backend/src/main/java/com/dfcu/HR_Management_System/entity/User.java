@@ -11,6 +11,7 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -24,14 +25,15 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String firstName;
-    private String lastName;
+    private String surName;
     private String otherNames;
-    private String gender;
     private String employeeNumber;
+    private LocalDate dateOfBirth;
+    @Lob
+    private String idPhotoBase64;
+    private String validationCode;
     private String email;
     private String password;
-    private String phoneNumber;
     private String status;
     private Role role;
 
