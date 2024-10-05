@@ -11,6 +11,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +24,8 @@ import java.util.function.Function;
 @Component
 public class JwtUtil {
 
-    private final String secret = "e83f3851fa7407cb60737b93251ce8ca0c85ccfef4bb304792f7fe2a4cb7cb39e83f3851fa7407cb60737b93251ce8ca0c85ccfef4bb304792f7fe2a4cb7cb39";
+    @Value("${spring.secret}")
+    private String secret;
 
     // pass the value from createToken and generate token
     public String generateToken(String username){

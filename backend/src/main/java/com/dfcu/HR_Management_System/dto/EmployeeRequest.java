@@ -18,7 +18,7 @@ import java.time.LocalDate;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserRequest {
+public class EmployeeRequest {
 
     private String surName;
     private String otherNames;
@@ -28,6 +28,7 @@ public class UserRequest {
     private LocalDate dateOfBirth;
     @Lob
     private String idPhotoBase64;
+    private String validationCode;
 
 
 }

@@ -1,7 +1,7 @@
 /**
  * Created By Eng. Pius Obonyo
- * Date: 6/12/24
- * Time: 6:49 PM
+ * Date: 10/4/24
+ * Time: 5:34 PM
  */
 
 package com.dfcu.HR_Management_System.dto;
@@ -15,11 +15,11 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BankResponse {
+public class UserInfo {
 
-    private String responseCode;
-    private String responseMessage;
-    private UserInfo userInfo;
+    private String surname;
+    private String otherNames;
+    private String employeeNumber;
 
 }
 

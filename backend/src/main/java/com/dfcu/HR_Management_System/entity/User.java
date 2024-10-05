@@ -36,6 +36,7 @@ public class User {
     private String password;
     private String status;
     private Role role;
+    private Boolean isFirstTimeLogin;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
