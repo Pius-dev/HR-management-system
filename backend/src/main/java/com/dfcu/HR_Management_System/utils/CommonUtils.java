@@ -8,11 +8,24 @@ package com.dfcu.HR_Management_System.utils;
 
 import com.dfcu.HR_Management_System.dto.EmployeeRequest;
 
+import java.security.SecureRandom;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Random;
 
 public class CommonUtils {
+
+    private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%";
+    private static final SecureRandom RANDOM = new SecureRandom();
+
+    // Method to generate a random password of a specified length
+    public static String generateRandomPassword(int length) {
+        StringBuilder password = new StringBuilder(length);
+        for (int i = 0; i < length; i++) {
+            password.append(CHARACTERS.charAt(RANDOM.nextInt(CHARACTERS.length())));
+        }
+        return password.toString();
+    }
 
     /**
      * generate employee number with first letter of othername

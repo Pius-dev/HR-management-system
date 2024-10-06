@@ -8,40 +8,47 @@ package com.dfcu.HR_Management_System.utils;
 
 public class Constant {
 
-    public static final String ACCOUNT_EXISTS_CODE = "001";
+    // Account Management
+    public static final String ACCOUNT_EXISTS_CODE = "400";
     public static final String ACCOUNT_EXISTS_MESSAGE = "This user already has an account created!";
-    public static final String ACCOUNT_CREATION_SUCCESS_CODE = "002";
+    public static final String ACCOUNT_CREATION_SUCCESS_CODE = "201";
     public static final String ACCOUNT_CREATION_SUCCESS_MESSAGE = "Employee has been created successfully.";
 
+    // Authentication and Authorization
+    public static final String AUTH_UNAUTHORIZED_ACCESS_CODE = "401";
+    public static final String AUTH_UNAUTHORIZED_ACCESS_MESSAGE = "Unauthorized access: Admin privileges required.";
+    public static final String AUTH_FORBIDDEN_CODE = "403";
+    public static final String AUTH_FORBIDDEN_MESSAGE = "Access is forbidden. You do not have the required permissions.";
+    public static final String AUTH_FAILURE_CODE = "401";
+    public static final String AUTH_FAILURE_MESSAGE = "Authentication failed. Please check your credentials.";
+    public static final String AUTH_INVALID_VALIDATION_CODE = "400";
+    public static final String AUTH_INVALID_VALIDATION_MESSAGE = "Invalid validation code. Must be a 10-digit number.";
+    public static final String AUTH_ACCOUNT_LOCKED_CODE = "403";
+    public static final String AUTH_ACCOUNT_LOCKED_MESSAGE = "Account locked. Please contact customer support.";
 
-    //Authentication and Authorization
+    // Password Management
+    public static final String PASSWORD_RESET_SUCCESS_CODE = "200";
+    public static final String PASSWORD_RESET_SUCCESS_MESSAGE = "Password reset successfully.";
+    public static final String PASSWORD_RESET_FAILURE_CODE = "400";
+    public static final String PASSWORD_RESET_FAILURE_MESSAGE = "Password reset failed. Please try again.";
 
-    public static final String AUTHENTICATION_SUCCESS_CODE = "016";
-    public static final String AUTHENTICATION_SUCCESS_MESSAGE = "Authentication successful.";
-    public static final String AUTHENTICATION_FAILURE_CODE = "017";
-    public static final String AUTHENTICATION_FAILURE_MESSAGE = "Authentication failed. Please check your credentials.";
-    public static final String INVALID_VALIDATION_CODE = "018";
-    public static final String INVALID_VALIDATION_CODE_MESSAGE = "The validation code must be a 10-digit number.";
-    public static final String ACCOUNT_LOCKED_CODE = "019";
-    public static final String ACCOUNT_LOCKED_MESSAGE = "Your account has been locked. Please contact customer support.";
-    public static final String PASSWORD_RESET_SUCCESS_CODE = "020";
-    public static final String PASSWORD_RESET_SUCCESS_MESSAGE = "Password has been reset successfully.";
-    public static final String PASSWORD_RESET_FAILURE_CODE = "021";
-    public static final String PASSWORD_RESET_FAILURE_MESSAGE = "Failed to reset the password. Please try again.";
+    // General Success Responses
+    public static final String SUCCESS_DATA_FOUND_CODE = "200";
+    public static final String SUCCESS_DATA_FOUND_MESSAGE = "Requested data found.";
 
-    // General Errors
+    // General Error Responses
+    public static final String ERROR_SYSTEM_CODE = "500";
+    public static final String ERROR_SYSTEM_MESSAGE = "A system error has occurred. Please try again later.";
+    public static final String ERROR_INVALID_REQUEST_CODE = "400";
+    public static final String ERROR_INVALID_REQUEST_MESSAGE = "Invalid request. Please check the request parameters.";
+    public static final String ERROR_OPERATION_NOT_ALLOWED_CODE = "403";
+    public static final String ERROR_OPERATION_NOT_ALLOWED_MESSAGE = "Operation not allowed.";
+    public static final String ERROR_SERVICE_UNAVAILABLE_CODE = "503";
+    public static final String ERROR_SERVICE_UNAVAILABLE_MESSAGE = "Service is currently unavailable. Please try again later.";
 
-    public static final String SYSTEM_ERROR_CODE = "022";
-    public static final String SYSTEM_ERROR_MESSAGE = "A system error has occurred. Please try again later.";
-    public static final String INVALID_REQUEST_CODE = "023";
-    public static final String INVALID_REQUEST_MESSAGE = "Invalid request.";
-    public static final String DATA_NOT_FOUND_CODE = "024";
-    public static final String DATA_NOT_FOUND_MESSAGE = "Requested data not found.";
-    public static final String OPERATION_NOT_ALLOWED_CODE = "025";
-    public static final String OPERATION_NOT_ALLOWED_MESSAGE = "This operation is not allowed.";
-    public static final String SERVICE_UNAVAILABLE_CODE = "026";
-    public static final String SERVICE_UNAVAILABLE_MESSAGE = "Service is currently unavailable. Please try again later.";
-
-
+    // Not Found Response
+    public static final String NOT_FOUND_CODE = "404";
+    public static final String NOT_FOUND_MESSAGE = "The requested resource was not found.";
 }
+
 

@@ -6,10 +6,7 @@
 
 package com.dfcu.HR_Management_System.service.Impl;
 
-import com.dfcu.HR_Management_System.dto.BankResponse;
-import com.dfcu.HR_Management_System.dto.EmployeeRequest;
-import com.dfcu.HR_Management_System.dto.MailDetails;
-import com.dfcu.HR_Management_System.dto.UserInfo;
+import com.dfcu.HR_Management_System.dto.*;
 import com.dfcu.HR_Management_System.entity.Role;
 import com.dfcu.HR_Management_System.entity.User;
 import com.dfcu.HR_Management_System.exception.CustomException;
@@ -21,9 +18,14 @@ import com.dfcu.HR_Management_System.utils.Constant;
 import com.dfcu.HR_Management_System.utils.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -54,8 +56,8 @@ public class EmployeeServiceImpl implements EmployeeService {
             // Validate if the provided validation code is exactly 10 digits
             if (employeeRequest.getValidationCode() == null || !employeeRequest.getValidationCode().matches("\\d{10}")) {
                 return BankResponse.builder()
-                        .responseCode(Constant.INVALID_VALIDATION_CODE)
-                        .responseMessage(Constant.INVALID_VALIDATION_CODE_MESSAGE)
+                        .responseCode(Constant.AUTH_INVALID_VALIDATION_CODE)
+                        .responseMessage(Constant.AUTH_INVALID_VALIDATION_MESSAGE)
                         .build();
             }
             User newUser = User.builder()
@@ -63,7 +65,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                     .otherNames(employeeRequest.getOtherNames())
                     .email(employeeRequest.getEmail())
                     .dateOfBirth(employeeRequest.getDateOfBirth())
-                    .validationCode(employeeRequest.getValidationCode())
+                   .validationCode(employeeRequest.getValidationCode())
                     .idPhotoBase64(employeeRequest.getIdPhotoBase64())
                     .employeeNumber(CommonUtils.generateEmployeeNumber(employeeRequest))
                     .password(passwordEncoder.encode(employeeRequest.getPassword()))
@@ -93,7 +95,9 @@ public class EmployeeServiceImpl implements EmployeeService {
                     )
                     .build();
 
-            emailService.sendEmailAlert(emailDetails);
+            System.out.println( "Alert sent ");
+
+           // emailService.sendEmailAlert(emailDetails);
             return BankResponse.builder()
                     .responseCode(Constant.ACCOUNT_CREATION_SUCCESS_CODE)
                     .responseMessage(Constant.ACCOUNT_CREATION_SUCCESS_MESSAGE)
@@ -105,8 +109,66 @@ public class EmployeeServiceImpl implements EmployeeService {
                     .build();
 
         } catch (Exception e) {
-            throw new CustomException(Constant.SYSTEM_ERROR_CODE, Constant.SYSTEM_ERROR_MESSAGE);
+            throw new CustomException(Constant.ERROR_SYSTEM_CODE, Constant.ERROR_SYSTEM_MESSAGE);
         }
     }
+
+    @Override
+    public BankResponse login(LoginDto loginDto) {
+        try {
+            try {
+                authenticationManager.authenticate(
+                        new UsernamePasswordAuthenticationToken(loginDto.getEmployeeNumber(), loginDto.getPassword()));
+            } catch (BadCredentialsException e) {
+                throw new BadCredentialsException("Incorrect username or password");
+            }
+
+            // Retrieve user details from the database
+            final UserDetails userDetails = userDetailsService.loadUserByUsername(loginDto.getEmployeeNumber());
+            Optional<User> optionalUser = Optional.ofNullable(userRepository.findByEmployeeNumber(userDetails.getUsername()));
+
+            if (optionalUser.isPresent()) {
+                User user = optionalUser.get();
+
+                // Check if it's the user's first time login
+                if (Boolean.TRUE.equals(user.getIsFirstTimeLogin())) {
+                    // Prompt for validation code and check if it's provided
+                    if (loginDto.getValidationCode() == null || !loginDto.getValidationCode().equals(user.getValidationCode())) {
+                        return BankResponse.builder()
+                                .responseCode("Validation Required")
+                                .responseMessage("Please provide the correct validation code sent to your email.")
+                                .build();
+                    }
+
+                    // If validation is successful, update the first-time login flag
+                    user.setIsFirstTimeLogin(Boolean.FALSE);
+                    userRepository.save(user);  // Save the updated user info
+                }
+
+                // Check if it's the HR user's first time using the generated password
+                if (user.getRole() == Role.ROLE_HR && Boolean.TRUE.equals(user.getIsFirstTimePassword())) {
+                    // Prompt for password change
+                    return BankResponse.builder()
+                            .responseCode("First Time Password Change Required")
+                            .responseMessage("Please change your password as this is your first time login.")
+                            .build();
+                }
+
+                // Generate JWT after successful login and validation
+                final String jwt = jwtUtil.generateToken(userDetails.getUsername());
+
+                return BankResponse.builder()
+                        .responseCode("Login Success")
+                        .responseMessage(jwt)
+                        .build();
+            } else {
+                throw new CustomException("User not found", "The provided employee number does not exist.");
+            }
+        } catch (Exception e) {
+            throw new CustomException(Constant.ERROR_SYSTEM_CODE, Constant.ERROR_SYSTEM_MESSAGE);
+        }
+    }
+
+
 }
 

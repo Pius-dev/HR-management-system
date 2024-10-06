@@ -5,6 +5,7 @@
  */
 package com.dfcu.HR_Management_System.repository;
 
+import com.dfcu.HR_Management_System.entity.Role;
 import com.dfcu.HR_Management_System.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -17,11 +18,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Boolean existsByEmployeeNumber(String employeeNumber);
 
-    Boolean existsByPhoneNumber(String phoneNumber);
-
     User findByEmployeeNumber(String accountNumber);
 
     Optional<User> findFirstByEmail(String username);
 
-    User findByPhoneNumber(String phoneNumber);
+    User findByRole(Role roles);
+
+    Optional<User> findByEmail(String loggedInEmail);
 }

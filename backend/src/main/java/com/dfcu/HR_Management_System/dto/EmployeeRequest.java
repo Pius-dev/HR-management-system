@@ -26,10 +26,8 @@ public class EmployeeRequest {
     private String password;
     private String phoneNumber;
     private LocalDate dateOfBirth;
-    @Lob
     private String idPhotoBase64;
     private String validationCode;
-
 
 }
 

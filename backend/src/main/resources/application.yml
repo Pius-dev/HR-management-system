@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/bankDb
+    url: jdbc:postgresql://localhost:5432/hr_system
     username: postgres
     password: 6eight14
     driver-class-name: org.postgresql.Driver
@@ -21,6 +21,10 @@ spring:
         smtp:
           starttls:
             enable: true
+
+  adminPassword: 6eight14
+  adminEmail: admin@gmail.com
+  adminUsername: Admin1
   secret: e83f3851fa7407cb60737b93251ce8ca0c85ccfef4bb304792f7fe2a4cb7cb39e83f3851fa7407cb60737b93251ce8ca0c85ccfef4bb304792f7fe2a4cb7cb39
 
 server:

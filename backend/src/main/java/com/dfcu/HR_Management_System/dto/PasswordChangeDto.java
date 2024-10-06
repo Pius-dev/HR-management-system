@@ -1,7 +1,7 @@
 /**
  * Created By Eng. Pius Obonyo
- * Date: 6/21/24
- * Time: 11:13 PM
+ * Date: 10/5/24
+ * Time: 10:28 PM
  */
 
 package com.dfcu.HR_Management_System.dto;
@@ -15,10 +15,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class LoginDto {
+public class PasswordChangeDto {
 
     private String employeeNumber;
-    private String password;
-    private String validationCode;
+    private String currentPassword;
+    private String newPassword;
 }
 
