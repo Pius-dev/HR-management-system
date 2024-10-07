@@ -24,6 +24,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import jakarta.servlet.http.HttpServletResponse;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Optional;
 
@@ -114,14 +117,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public BankResponse login(LoginDto loginDto) {
+    public BankResponse login(LoginDto loginDto, HttpServletResponse httpServletResponse) {
         try {
-            try {
-                authenticationManager.authenticate(
-                        new UsernamePasswordAuthenticationToken(loginDto.getEmployeeNumber(), loginDto.getPassword()));
-            } catch (BadCredentialsException e) {
-                throw new BadCredentialsException("Incorrect username or password");
-            }
+            // Authenticate the user
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(loginDto.getEmployeeNumber(), loginDto.getPassword()));
 
             // Retrieve user details from the database
             final UserDetails userDetails = userDetailsService.loadUserByUsername(loginDto.getEmployeeNumber());
@@ -157,9 +157,23 @@ public class EmployeeServiceImpl implements EmployeeService {
                 // Generate JWT after successful login and validation
                 final String jwt = jwtUtil.generateToken(userDetails.getUsername());
 
+                // Prepare the response JSON
+                JSONObject jsonResponse = new JSONObject()
+                        .put("userId", optionalUser.get().getId())
+                        .put("role", user.getRole()); // Ensure you retrieve the role from the User object
+
+                // Set the necessary response headers
+                httpServletResponse.addHeader("Access-Control-Expose-Headers", "Authorization");
+                httpServletResponse.addHeader("Access-Control-Allow-Headers", "Authorization, X-PINGOTHER,Origin, " +
+                        "X-Requested-With, Content-Type, Accept, X-Custom-header");
+                httpServletResponse.addHeader(HEADER_STRING, TOKEN_PREFIX + jwt);
+
+                // Write the JSON response
+                httpServletResponse.getWriter().write(jsonResponse.toString());
+
                 return BankResponse.builder()
                         .responseCode("Login Success")
-                        .responseMessage(jwt)
+                        .responseMessage("User logged in successfully")
                         .build();
             } else {
                 throw new CustomException("User not found", "The provided employee number does not exist.");
@@ -168,6 +182,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw new CustomException(Constant.ERROR_SYSTEM_CODE, Constant.ERROR_SYSTEM_MESSAGE);
         }
     }
+
 
 
 }

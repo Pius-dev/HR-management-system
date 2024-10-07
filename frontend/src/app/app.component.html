@@ -1,0 +1,73 @@
+<mat-sidenav-container class="sidenav-container">
+  <!-- Sidenav for Admin -->
+  <mat-sidenav
+    *ngIf="isAdminLoggedIn"
+    mode="side"
+    opened
+    class="sidenav"
+    color="primary"
+  >
+    <mat-nav-list>
+      <mat-list-item>
+        <h3 class="mat-title">DFCU HR Management System</h3>
+      </mat-list-item>
+
+      <!-- Admin Dashboard and Metrics -->
+      <a mat-list-item routerLink="/admin/dashboard" routerLinkActive="active">
+        <mat-icon>dashboard</mat-icon>
+        <span>Dashboard</span>
+      </a>
+
+      <a
+        mat-list-item
+        routerLink="/admin/employee-list"
+        routerLinkActive="active"
+      >
+        <mat-icon>view</mat-icon>
+        <span>Employee</span>
+      </a>
+
+      <mat-divider></mat-divider>
+
+      <!-- Logout -->
+      <a mat-list-item (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <span>Logout</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <!-- Sidenav for Staff -->
+  <mat-sidenav
+    *ngIf="isStaffLoggedIn"
+    mode="side"
+    opened
+    class="sidenav"
+    color="primary"
+  >
+    <mat-nav-list>
+      <mat-list-item>
+        <h3 class="mat-title">DFCU HR Management System</h3>
+      </mat-list-item>
+
+      <!-- Staff Profile -->
+      <a mat-list-item routerLink="/staff/profile" routerLinkActive="active">
+        <mat-icon>person</mat-icon>
+        <span>Profile</span>
+      </a>
+
+      <mat-divider></mat-divider>
+
+      <!-- Logout -->
+      <a mat-list-item (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <span>Logout</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <!-- Main Content Area -->
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

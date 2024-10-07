@@ -57,6 +57,7 @@ public class AdminController {
                 .build();
     }
 
+
     @PreAuthorize("hasRole('ROLE_ADMIN')")  // Only admins can access this
     @GetMapping("/metrics")
     public ResponseEntity<MetricsDto> getApiMetrics() {

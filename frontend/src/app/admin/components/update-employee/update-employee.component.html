@@ -1,0 +1,121 @@
+<div class="container-sm">
+  <div class="col-md-6 offset-md-3 container-sm">
+    <mat-card>
+      <mat-card-title>Update Employee</mat-card-title>
+      <mat-card-content>
+        <form
+          [formGroup]="updateEmployeeForm"
+          (ngSubmit)="onSubmit()"
+          class="row g-3"
+        >
+          <mat-form-field appearance="outline" class="col-md-6">
+            <mat-label>Sur Name</mat-label>
+            <input
+              matInput
+              formControlName="surName"
+              required
+              minlength="3"
+              placeholder="Enter Sur Name"
+            />
+            <mat-error
+              *ngIf="
+                updateEmployeeForm.get('surName').hasError('required') &&
+                updateEmployeeForm.get('surName').touched
+              "
+            >
+              Sur Name is required
+            </mat-error>
+            <mat-error
+              *ngIf="
+                updateEmployeeForm.get('surName').hasError('minlength') &&
+                updateEmployeeForm.get('surName').touched
+              "
+            >
+              Sur Name must be at least 3 characters long
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="col-md-6">
+            <mat-label>Other Names</mat-label>
+            <input
+              matInput
+              formControlName="otherNames"
+              required
+              placeholder="Enter Other Names"
+            />
+            <mat-error
+              *ngIf="
+                updateEmployeeForm.get('otherNames').hasError('required') &&
+                updateEmployeeForm.get('otherNames').touched
+              "
+            >
+              Other Names are required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="col-md-6">
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              type="email"
+              formControlName="email"
+              required
+              placeholder="Enter Email"
+            />
+            <mat-error
+              *ngIf="
+                updateEmployeeForm.get('email').hasError('required') &&
+                updateEmployeeForm.get('email').touched
+              "
+            >
+              Email is required
+            </mat-error>
+            <mat-error
+              *ngIf="
+                updateEmployeeForm.get('email').hasError('email') &&
+                updateEmployeeForm.get('email').touched
+              "
+            >
+              Invalid email format
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="col-md-6">
+            <mat-label>Phone Number</mat-label>
+            <input
+              matInput
+              formControlName="phoneNumber"
+              required
+              placeholder="Enter Phone Number"
+            />
+            <mat-error
+              *ngIf="
+                updateEmployeeForm.get('phoneNumber').hasError('required') &&
+                updateEmployeeForm.get('phoneNumber').touched
+              "
+            >
+              Phone Number is required
+            </mat-error>
+          </mat-form-field>
+
+          <div class="col-md-6">
+            <button
+              mat-raised-button
+              color="primary"
+              type="submit"
+              [disabled]="updateEmployeeForm.invalid"
+            >
+              Update
+            </button>
+          </div>
+
+          <div class="col-md-6">
+            <button mat-button type="button" (click)="goToEmployeeList()">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

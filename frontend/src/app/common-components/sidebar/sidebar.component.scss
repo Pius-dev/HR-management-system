@@ -1,0 +1,22 @@
+.container {
+  padding: 20px;
+}
+
+.analytics-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+
+  .card {
+    flex: 1;
+    margin-right: 10px;
+  }
+
+  .card:last-child {
+    margin-right: 0;
+  }
+}
+
+.charts-container {
+  margin-top: 20px;
+}

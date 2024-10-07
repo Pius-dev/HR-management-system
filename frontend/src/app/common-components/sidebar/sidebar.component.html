@@ -1,0 +1,16 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #sidenav mode="side" opened>
+    <mat-toolbar color="primary">Admin Panel</mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item routerLink="/admin/dashboard">Dashboard</a>
+      <a mat-list-item routerLink="/admin/employees">Employees</a>
+      <a mat-list-item routerLink="/admin/metrics">Metrics</a>
+      <!-- Link to metrics page -->
+      <a mat-list-item routerLink="/settings">Settings</a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

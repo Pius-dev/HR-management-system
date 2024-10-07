@@ -16,4 +16,5 @@ public interface AdminService {
 
     StaffDto getStaffByEmployeeNumber(String employeeNumber);
     BankResponse updateStaffDetails(Long staffId, EmployeeRequest employeeRequest);
+    StaffDto getStaffById(Long staffId);
 }

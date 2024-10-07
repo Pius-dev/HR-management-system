@@ -1,0 +1,43 @@
+<div class="container" fxLayout="column" fxLayoutAlign="start stretch">
+  <div class="analytics-container" fxLayout="row" fxLayoutGap="10px">
+    <mat-card class="card">
+      <mat-card-header>
+        <mat-card-title>Total Employees</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <h2>100</h2>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="card">
+      <mat-card-header>
+        <mat-card-title>Total Requests</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <h2>{{ requestData?.totalRequests }}</h2>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="card">
+      <mat-card-header>
+        <mat-card-title>Successful Requests</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <h2>{{ requestData?.successfulRequests }}</h2>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="card">
+      <mat-card-header>
+        <mat-card-title>Failed Requests</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <h2>{{ requestData?.failedRequests }}</h2>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="charts-container">
+    <app-request-chart [data]="requestData"></app-request-chart>
+  </div>
+</div>

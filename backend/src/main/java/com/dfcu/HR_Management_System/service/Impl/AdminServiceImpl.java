@@ -171,6 +171,16 @@ public class AdminServiceImpl implements AdminService {
         return staffMember.map(User::getDto).orElse(null);
     }
 
+    @Override
+    @Transactional
+    public StaffDto getStaffById(Long staffId) {
+        Optional<User> optionalUser = userRepository.findById(staffId);
+        if (optionalUser.isPresent()) {
+            return optionalUser.get().getDto();
+        }
+        return null;
+    }
+
 
      @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_HR')")
     @Override
