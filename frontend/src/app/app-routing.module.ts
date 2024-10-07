@@ -18,7 +18,7 @@ const routes: Routes = [
       import("./admin/admin.module").then((m) => m.AdminModule),
   },
   // Wildcard route for a 404 page if needed
-  { path: "**", redirectTo: "login" },
+  // { path: "**", redirectTo: "login" },
 ];
 
 @NgModule({

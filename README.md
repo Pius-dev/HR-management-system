@@ -1,5 +1,9 @@
 # banking-and-financial-system
 
+API DOC
+
+http://localhost:8082/swagger-ui/index.html#/
+
 **Backend Technology:**
 
 The backend, powered by Spring Boot, handles data processing, business logic, and database interactions. It exposes RESTful APIs that the frontend consumes for seamless communication. Spring Boot's modular and organized structure simplifies code maintenance and promotes scalability.

@@ -26,17 +26,16 @@ export class EmployeeListComponent {
   getEmployees(): void {
     this.employeeService.getAllStaff().subscribe(
       (data) => {
-        this.employees = data; // Adjusting to match the response structure
-        console.log("Fetched employees: ", this.employees); // Logging the employees array
+        this.employees = data;
       },
       (error) => {
-        console.error("Error fetching employees:", error); // Handling errors
+        console.error("Error fetching employees:", error);
       }
     );
   }
 
-  updateEmployee(employeeNumber: string): void {
-    this.router.navigate(["admin/update-employee", employeeNumber]);
+  updateEmployee(staffId: number): void {
+    this.router.navigate([`/admin/update-employee`, staffId]);
   }
 
   detailsOfEmployee(id: number): void {

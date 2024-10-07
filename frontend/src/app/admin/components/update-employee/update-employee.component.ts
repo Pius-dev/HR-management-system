@@ -6,19 +6,19 @@ import { AdminService } from "../../service/admin.service";
 @Component({
   selector: "app-update-employee",
   templateUrl: "./update-employee.component.html",
-  styleUrls: ["./update-employee.component.scss"], // Corrected styleUrls to styleUrls
+  styleUrls: ["./update-employee.component.scss"],
 })
 export class UpdateEmployeeComponent implements OnInit {
-  updateEmployeeForm: FormGroup; // Declare the FormGroup
+  updateEmployeeForm: FormGroup;
   employee: any = {};
+  staffId: number | null = null;
 
   constructor(
     private employeeService: AdminService,
     private router: Router,
     private route: ActivatedRoute,
-    private fb: FormBuilder // Inject FormBuilder
+    private fb: FormBuilder
   ) {
-    // Initialize the FormGroup with form controls and validations
     this.updateEmployeeForm = this.fb.group({
       surName: ["", [Validators.required, Validators.minLength(3)]],
       otherNames: ["", Validators.required],
@@ -28,54 +28,52 @@ export class UpdateEmployeeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const employeeNumber = this.route.snapshot.paramMap.get("employeeNumber");
-    this.getEmployeeByEmployeeNumber(employeeNumber);
+    this.staffId = Number(this.route.snapshot.paramMap.get("staffId"));
+    console.log("Staff ID in Update Component:", this.staffId);
+
+    if (this.staffId) {
+      this.getEmployeeByStaffId(this.staffId);
+    }
   }
 
-  getEmployeeByEmployeeNumber(employeeNumber: string | null): void {
-    if (employeeNumber) {
-      this.employeeService
-        .getEmployeeByEmployeeNumber(employeeNumber)
-        .subscribe(
-          (data) => {
-            this.employee = data; // Populate employee details
-            // Patch the form with the fetched employee data
-            this.updateEmployeeForm.patchValue({
-              surName: this.employee.surName,
-              otherNames: this.employee.otherNames,
-              email: this.employee.email,
-              phoneNumber: this.employee.phoneNumber,
-            });
-          },
-          (error) => {
-            console.error("Error fetching employee data", error); // Handle error
-          }
-        );
+  getEmployeeByStaffId(staffId: number | null): void {
+    if (staffId) {
+      this.employeeService.getEmployeeById(+staffId).subscribe(
+        (data) => {
+          this.employee = data; // Populate employee details
+          this.updateEmployeeForm.patchValue({
+            surName: this.employee.surName,
+            otherNames: this.employee.otherNames,
+            email: this.employee.email,
+            phoneNumber: this.employee.phoneNumber,
+          });
+        },
+        (error) => {
+          console.error("Error fetching employee data", error);
+        }
+      );
     }
   }
 
   onSubmit(): void {
-    if (this.updateEmployeeForm.valid) {
-      // Check if form is valid before submitting
-      const updatedEmployee = {
-        ...this.employee,
-        ...this.updateEmployeeForm.value,
-      }; // Merge updated values
-      this.employeeService.updateEmployee(updatedEmployee).subscribe(
-        (data) => {
-          console.log("Employee updated successfully!", data);
-          this.router.navigate(["/employee-details"]);
-        },
-        (error) => {
-          console.error("Error updating employee data", error);
-        }
-      );
+    if (this.updateEmployeeForm.valid && this.staffId) {
+      this.employeeService
+        .updateEmployee(this.staffId, this.updateEmployeeForm.value)
+        .subscribe(
+          (data) => {
+            console.log("Employee updated successfully!", data);
+            this.router.navigate(["/employee-details"]); // Redirect after successful update
+          },
+          (error) => {
+            console.error("Error updating employee data", error);
+          }
+        );
     } else {
-      console.error("Form is invalid");
+      console.error("Form is invalid or staffId is missing");
     }
   }
 
   goToEmployeeList(): void {
-    this.router.navigate(["/employee-details"]); // Navigate back to employee list
+    this.router.navigate(["/employees"]); // Navigate back to the employee list
   }
 }

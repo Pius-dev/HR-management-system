@@ -10,7 +10,7 @@ const routes: Routes = [
   { path: "", component: AdminComponent },
   { path: "dashboard", component: AdminDashboardComponent },
   { path: "employee-list", component: EmployeeListComponent },
-  { path: "update-employee/", component: UpdateEmployeeComponent },
+  { path: "update-employee/:staffId", component: UpdateEmployeeComponent },
 ];
 
 @NgModule({

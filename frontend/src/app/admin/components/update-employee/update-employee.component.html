@@ -1,14 +1,16 @@
 <div class="container-sm">
-  <div class="col-md-6 offset-md-3 container-sm">
+  <div class="col-md-6 offset-md-3">
     <mat-card>
-      <mat-card-title>Update Employee</mat-card-title>
+      <mat-card-title class="text-center" style="margin-bottom: 20px">
+        Update Employee
+      </mat-card-title>
       <mat-card-content>
         <form
           [formGroup]="updateEmployeeForm"
           (ngSubmit)="onSubmit()"
           class="row g-3"
         >
-          <mat-form-field appearance="outline" class="col-md-6">
+          <mat-form-field appearance="outline" class="col-md-12">
             <mat-label>Sur Name</mat-label>
             <input
               matInput
@@ -35,7 +37,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field appearance="outline" class="col-md-6">
+          <mat-form-field appearance="outline" class="col-md-12">
             <mat-label>Other Names</mat-label>
             <input
               matInput
@@ -53,7 +55,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field appearance="outline" class="col-md-6">
+          <mat-form-field appearance="outline" class="col-md-12">
             <mat-label>Email</mat-label>
             <input
               matInput
@@ -80,7 +82,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field appearance="outline" class="col-md-6">
+          <mat-form-field appearance="outline" class="col-md-12">
             <mat-label>Phone Number</mat-label>
             <input
               matInput
@@ -98,7 +100,7 @@
             </mat-error>
           </mat-form-field>
 
-          <div class="col-md-6">
+          <div class="col-md-12" style="margin-top: 20px">
             <button
               mat-raised-button
               color="primary"
@@ -106,12 +108,6 @@
               [disabled]="updateEmployeeForm.invalid"
             >
               Update
-            </button>
-          </div>
-
-          <div class="col-md-6">
-            <button mat-button type="button" (click)="goToEmployeeList()">
-              Cancel
             </button>
           </div>
         </form>

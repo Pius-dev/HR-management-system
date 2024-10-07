@@ -40,6 +40,15 @@ public class AdminController {
         return ResponseEntity.notFound().build();
     }
 
+    @GetMapping("/staff/{staffId}")
+    public ResponseEntity<StaffDto> getStaffById(@PathVariable Long staffId) {
+        StaffDto staffDto = adminService.getStaffById(staffId);
+        if (staffDto != null) {
+            return ResponseEntity.ok(staffDto);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
     @PutMapping("/update/{staffId}")
     public BankResponse updateStaffDetails(
             @PathVariable Long staffId,
